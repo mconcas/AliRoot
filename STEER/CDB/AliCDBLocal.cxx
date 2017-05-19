@@ -836,14 +836,12 @@ void AliCDBLocal::QueryValidFiles() {
     AliWarning ("CDB meta data parameters are not used by local storage query!");
     delete fMetaDataFilter; fMetaDataFilter=0;
   }
-
   // Check if in CVMFS case
   TString cvmfsOcdbTag(gSystem->Getenv("OCDB_PATH"));
-  if (!cvmfsOcdbTag.IsNull()) {
-    QueryValidCVMFSFiles(cvmfsOcdbTag);
-    return;
-  }
-
+  //  if (!cvmfsOcdbTag.IsNull()) {
+  //    QueryValidCVMFSFiles(cvmfsOcdbTag);
+  //   return;
+  // }
   void* storageDirPtr = gSystem->OpenDirectory(fBaseDirectory);
 
   const char* level0;
