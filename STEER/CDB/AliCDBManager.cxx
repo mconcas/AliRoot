@@ -742,16 +742,16 @@ void AliCDBManager::ValidateCvmfsCase() const {
 //    if (! fCvmfsOcdb.BeginsWith("/cvmfs"))  //!!!! to be commented out for testing
 //      AliFatal(Form("OCDB_PATH set to an invalid path: %s", fCvmfsOcdb.Data()));
 
-    TString cvmfsUri(fCvmfsOcdb);
-    gSystem->ExpandPathName(cvmfsUri);
-    if (gSystem->AccessPathName(cvmfsUri))
-      AliFatal(Form("OCDB_PATH set to an invalid path: %s", cvmfsUri.Data()));
+    TString cvmfsPath(fCvmfsOcdb);
+    gSystem->ExpandPathName(cvmfsPath);
+    if (gSystem->AccessPathName(cvmfsPath))
+      AliFatal(Form("OCDB_PATH set to an invalid path: %s", cvmfsPath.Data()));
     
     AliDebug(3, "OCDB_PATH envvar is set. Changing OCDB storage from alien:// to local:///cvmfs type.");
-    cvmfsUri = cvmfsUri.Strip(TString::kTrailing, '/');
-    cvmfsUri.Append("/calibration/data/OCDBFoldervsRunRange.xml");
-    if (gSystem->AccessPathName(cvmfsUri))
-      AliFatal(Form("Cannot find valid file OCDBFoldervsRunRange.xml in: %s", cvmfsUri.Data()));
+    cvmfsPath = cvmfsPath.Strip(TString::kTrailing, '/');
+    cvmfsPath.Append("/calibration/data/OCDBFoldervsRunRange.xml");
+    if (gSystem->AccessPathName(cvmfsPath))
+      AliFatal(Form("Cannot find valid file OCDBFoldervsRunRange.xml in: %s", cvmfsPath.Data()));
 }
 
 //_____________________________________________________________________________
