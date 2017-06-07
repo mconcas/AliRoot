@@ -617,8 +617,8 @@ Bool_t AliCDBManager::SetOCDBUploadMode() {
 void AliCDBManager::SetDefaultStorage(const char* storageUri) {
 // sets default storage from URI string
 
-  // if in the cvmfs case (triggered by environment variable) check for path validity
-  // and modify Uri if it is "raw://"
+  // If in the CVMFS case (triggered by environment variable) check for path
+  // validity and modify URI dynamically if it is "raw://"
   TString cvmfsOcdb(gSystem->Getenv("OCDB_PATH"));
   if (! cvmfsOcdb.IsNull()){
     fCvmfsOcdb = cvmfsOcdb;
@@ -738,15 +738,11 @@ void AliCDBManager::SetDefaultStorage(const char* mcString, const char* simType)
 
 //_____________________________________________________________________________
 void AliCDBManager::ValidateCvmfsCase() const {
-
-//    if (! fCvmfsOcdb.BeginsWith("/cvmfs"))  //!!!! to be commented out for testing
-//      AliFatal(Form("OCDB_PATH set to an invalid path: %s", fCvmfsOcdb.Data()));
-
     TString cvmfsPath(fCvmfsOcdb);
     gSystem->ExpandPathName(cvmfsPath);
     if (gSystem->AccessPathName(cvmfsPath))
       AliFatal(Form("OCDB_PATH set to an invalid path: %s", cvmfsPath.Data()));
-    
+
     AliDebug(3, "OCDB_PATH envvar is set. Changing OCDB storage from alien:// to local:///cvmfs type.");
     cvmfsPath = cvmfsPath.Strip(TString::kTrailing, '/');
     cvmfsPath.Append("/calibration/data/OCDBFoldervsRunRange.xml");
